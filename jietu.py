@@ -1,4 +1,5 @@
 import time
+import sys
 import win32gui, win32ui, win32con, win32api
 import pytesseract
 from PIL import Image
@@ -31,15 +32,13 @@ def main():
    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files (x86)\Tesseract-OCR\tesseract.exe"
    a = pytesseract.image_to_string(Image.open("picture.png"))
    if a == "bad":
-       time.sleep(0.4)
-       print("出现 bad ", time.strftime("%m-%d %H:%M:%S", time.localtime()))
-
-
-
-
-
-
-
+      time.sleep(0.4)
+      print("出现 bad ", time.strftime("%m-%d %H:%M:%S", time.localtime()))
+      temp = sys.stdout
+      with open("C:\\Users\\Administrator\\Desktop\\测试结果.txt", "a+") as f:
+         sys.stdout = f  # 输出指向txt文件
+         print("出现 bad ", time.strftime("%m-%d %H:%M:%S", time.localtime()))
+         sys.stdout = temp  # 输出重定向回consle
 while True:
    window_capture("picture.png")
    main()
